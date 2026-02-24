@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<div id="Tab Navigasi"></div>
     <nav class="navbar">
         <a href="#" class="logo">Waskita Infra II</a>
         <div class="nav-links">
@@ -16,26 +17,28 @@
             <a href="#about">Tentang Kami</a>
             <a href="#projects">Proyek Kami</a>
             <a href="#contact">Kontak</a>
-            <a href="#" class="btn-primary" style="margin-left: 30px;">Lihat Peta Proyek</a>
+            <a href="https://iyok0394-hash.github.io/webgis_infra2/" target="_blank" class="btn-primary" style="margin-left: 30px;">Lihat Peta Proyek</a>
         </div>
     </nav>
 
+<div id="Tab Utama"></div>
     <section class="hero-section">
         <div class="hero-content">
-            <h1>Memimpin Pembangunan Infrastruktur Indonesia</h1>
+            <h1>Departemen Infrastruktur II</h1>
             <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
             <a href="#" class="btn-primary">Telusuri Peta Proyek <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
+<div id="Tab Tentang"></div>  
     <section id="about" class="container">
         <h2 class="section-title">Tentang Divisi Infrastruktur II</h2>
         <div class="grid-2-cols">
             <div>
                 <h3>Profil Singkat</h3>
-                <p>Divisi Infrastruktur II Waskita Karya (Persero) Tbk. memiliki rekam jejak yang panjang dan gemilang dalam pembangunan infrastruktur berskala besar di seluruh Indonesia. Kami berkomitmen pada kualitas, inovasi, dan keberlanjutan untuk setiap proyek yang kami tangani, mulai dari jalan tol, jembatan, bandara, hingga fasilitas umum lainnya.</p>
-                <p>Dengan dukungan tim ahli dan teknologi terkini, kami terus berupaya menciptakan solusi infrastruktur yang efisien, aman, dan berdampak positif bagi masyarakat dan perekonomian nasional.</p>
-                <a href="#" class="btn-primary">Baca Lebih Lanjut</a>
+                <p>Infrastruktur II Department berfokus pada proyek-proyek infrastruktur jalan tol, jembatan dan fasilitas transportasi lainnya yang tersebar di seluruh Indonesia.</p>
+                <p>Infrastruktur 2 berperan penting dalam mendukung program pembangunan nasional, sekaligus berkontribusi pada pertumbuhan ekonomi dan kesejahteraan masyarakat melalui pengembangan konektivitas dan aksesibilitas di berbagai wilayah.</p>
+                <a href="https://www.waskita.co.id/" target="_blank" class="btn-primary">Baca Lebih Lanjut</a>
             </div>
             <div>
                 <img src="https://picsum.photos/600/400?random=2" alt="Waskita Infra II Project">
@@ -43,6 +46,7 @@
         </div>
     </section>
 
+<div id="Tab Peta Proyek"></div>    
     <section id="projects" class="container">
         <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
         <p style="text-align: center; margin-bottom: 2rem;">Jelajahi lokasi proyek strategis kami.</p>
@@ -50,10 +54,13 @@
         <div id="map" style="height: 500px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>
     </section>
 
+<div id="FOOTER"></div>
     <footer class="footer">
-        <p>&copy; 2023 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II. All Rights Reserved.</p>
+        <p>&copy; 2026 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II - Tim Digital Survey & GIS. All Rights Reserved.</p>
     </footer>
 
+
+<div id="SCRIPT PETA"></div>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
         <script>
@@ -75,7 +82,7 @@
                             let warnaTitik;
                             let statusProyek = feature.properties.status.toLowerCase(); // Ambil data status
 
-                            if (statusProyek === "on-going") {
+                            if (statusProyek === "on going") {
                                 warnaTitik = "#2ecc71"; // Hijau
                             } else if (statusProyek === "hold") {
                                 warnaTitik = "#3498db"; // Biru
@@ -119,6 +126,26 @@
 
             // 4. Perbaikan tampilan tiles yang pecah
             setTimeout(function(){ map.invalidateSize(); }, 500);
+
+            var legend = L.control({position: 'bottomright'});
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = ["on going", "hold", "finished"],
+                    colors = ["#2ecc71", "#3498db", "#db4438"];
+
+                div.innerHTML = '<div style="background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px; line-height: 18px;">' +
+                                '<b style="color: #333;">Status Proyek</b><br>';
+                
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<i style="background:' + colors[i] + '; width: 12px; height: 12px; display: inline-block; margin-right: 5px; border-radius: 50%;"></i> ' +
+                        grades[i] + '<br>';
+                }
+                div.innerHTML += '</div>';
+                return div;
+            };
+
+            legend.addTo(map);
         </script>
     </body>
 </html>
