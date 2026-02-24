@@ -58,24 +58,48 @@
 
         <script>
             // 1. Inisialisasi Peta
-            var map = L.map('map').setView([-2.5, 118], 5); // Fokus ke Indonesia
+            var map = L.map('map').setView([-2.5, 118], 5);
 
-            // 2. Tambahkan Basemap (Pilih yang elegan, misal CartoDB Positron)
+            // 2. Basemap
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; OpenStreetMap &copy; CARTO'
             }).addTo(map);
 
-            // 3. Tambahkan Marker Contoh (Nanti kita ganti dengan GeoJSON dari QGIS)
-            // Format: L.marker([lat, lng])
-            var marker = L.marker([-6.2415, 106.8745]).addTo(map); // Lokasi Kantor Waskita misalnya
-        
-            marker.bindPopup(`
-                <div style="text-align:center">
-                    <b style="color:#3453c1">Proyek Jalan Tol XYZ</b><br>
-                    <img src="assets/hero-waskita.jpg" width="120px" style="margin:5px 0; border-radius:3px;"><br>
-                    <a href="projects/detail-proyek.html" style="color:#db4438; font-weight:bold; text-decoration:none;">Lihat Detail Proyek</a>
-                </div>
-            `);
+            // 3. Memanggil data GeoJSON Lokal
+            fetch('data/proyek_infra2.json') // Pastikan file ini ada di folder data/
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        pointToLayer: function (feature, latlng) {
+                            // Warna merah maroon sesuai tema Waskita
+                            return L.circleMarker(latlng, {
+                                radius: 8,
+                                fillColor: "#db4438",
+                                color: "#fff",
+                                weight: 2,
+                                fillOpacity: 0.9
+                            });
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Sesuaikan 'project' dengan nama kolom di QGIS kamu (gambar image_42c9c4.jpg)
+                            var nama = feature.properties.project || "Proyek Waskita";
+                            var status = feature.properties.status || "-";
+                            
+                            layer.bindPopup(`
+                                <div style="text-align:center">
+                                    <b style="color:#3453c1">${nama}</b><br>
+                                    <small>Status: ${status}</small><br>
+                                    <hr>
+                                    <a href="projects/detail-proyek.html" style="color:#db4438; font-weight:bold;">Lihat Detail</a>
+                                </div>
+                            `);
+                        }
+                    }).addTo(map);
+                })
+                .catch(error => console.error('Error:', error));
+
+            // 4. Perbaikan tampilan tiles yang pecah
+            setTimeout(function(){ map.invalidateSize(); }, 500);
         </script>
     </body>
 </html>
