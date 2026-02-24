@@ -66,37 +66,56 @@
             }).addTo(map);
 
             // 3. Memanggil data GeoJSON Lokal
-            fetch('data/proyek_infra2.json') // Pastikan file ini ada di folder data/
+            fetch('data/proyek_infra2.json')
                 .then(response => response.json())
                 .then(data => {
                     L.geoJSON(data, {
                         pointToLayer: function (feature, latlng) {
-                            // Warna merah maroon sesuai tema Waskita
+                            // Tentukan warna berdasarkan status
+                            let warnaTitik;
+                            let statusProyek = feature.properties.status.toLowerCase(); // Ambil data status
+
+                            if (statusProyek === "on-going") {
+                                warnaTitik = "#2ecc71"; // Hijau
+                            } else if (statusProyek === "hold") {
+                                warnaTitik = "#3498db"; // Biru
+                            } else if (statusProyek === "finished") {
+                                warnaTitik = "#db4438"; // Merah Waskita
+                            } else {
+                                warnaTitik = "#95a5a6"; // Abu-abu jika status tidak dikenal
+                            }
+
                             return L.circleMarker(latlng, {
-                                radius: 8,
-                                fillColor: "#db4438",
-                                color: "#fff",
+                                radius: 9,
+                                fillColor: warnaTitik,
+                                color: "#ffffff", // Garis tepi putih agar kontras
                                 weight: 2,
+                                opacity: 1,
                                 fillOpacity: 0.9
                             });
                         },
                         onEachFeature: function (feature, layer) {
-                            // Sesuaikan 'project' dengan nama kolom di QGIS kamu (gambar image_42c9c4.jpg)
-                            var nama = feature.properties.project || "Proyek Waskita";
-                            var status = feature.properties.status || "-";
-                            
+                            // Membuat popup yang informatif
                             layer.bindPopup(`
-                                <div style="text-align:center">
-                                    <b style="color:#3453c1">${nama}</b><br>
-                                    <small>Status: ${status}</small><br>
-                                    <hr>
-                                    <a href="projects/detail-proyek.html" style="color:#db4438; font-weight:bold;">Lihat Detail</a>
+                                <div style="text-align:center; font-family: sans-serif;">
+                                    <h4 style="margin:0; color:#3453c1;">${feature.properties.project}</h4>
+                                    <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
+                                    <hr style="border:0; border-top:1px solid #eee;">
+                                    <a href="projects/detail-proyek.html" style="
+                                        text-decoration:none; 
+                                        color:white; 
+                                        background:#db4438; 
+                                        padding:5px 10px; 
+                                        border-radius:3px; 
+                                        font-size:12px;
+                                        display:inline-block;
+                                    ">Buka Detail Proyek</a>
                                 </div>
                             `);
                         }
                     }).addTo(map);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error memuat data warna:', error));
 
             // 4. Perbaikan tampilan tiles yang pecah
             setTimeout(function(){ map.invalidateSize(); }, 500);
