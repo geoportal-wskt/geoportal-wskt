@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waskita Karya - Divisi Infra II | Geoportal Proyek</title>
+   <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">Waskita Infra II</a>
+        <div class="nav-links">
+            <a href="#">Beranda</a>
+            <a href="#about">Tentang Kami</a>
+            <a href="#projects">Proyek Kami</a>
+            <a href="#contact">Kontak</a>
+            <a href="#" class="btn-primary" style="margin-left: 30px;">Lihat Peta Proyek</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Memimpin Pembangunan Infrastruktur Indonesia</h1>
+            <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
+            <a href="#" class="btn-primary">Telusuri Peta Proyek <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <h2 class="section-title">Tentang Divisi Infrastruktur II</h2>
+        <div class="grid-2-cols">
+            <div>
+                <h3>Profil Singkat</h3>
+                <p>Divisi Infrastruktur II Waskita Karya (Persero) Tbk. memiliki rekam jejak yang panjang dan gemilang dalam pembangunan infrastruktur berskala besar di seluruh Indonesia. Kami berkomitmen pada kualitas, inovasi, dan keberlanjutan untuk setiap proyek yang kami tangani, mulai dari jalan tol, jembatan, bandara, hingga fasilitas umum lainnya.</p>
+                <p>Dengan dukungan tim ahli dan teknologi terkini, kami terus berupaya menciptakan solusi infrastruktur yang efisien, aman, dan berdampak positif bagi masyarakat dan perekonomian nasional.</p>
+                <a href="#" class="btn-primary">Baca Lebih Lanjut</a>
+            </div>
+            <div>
+                <img src="https://picsum.photos/600/400?random=2" alt="Waskita Infra II Project">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Jelajahi lokasi proyek strategis kami.</p>
+        
+        <div id="map" style="height: 500px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2023 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II. All Rights Reserved.</p>
+    </footer>
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+        <script>
+            // 1. Inisialisasi Peta
+            var map = L.map('map').setView([-2.5, 118], 5); // Fokus ke Indonesia
+
+            // 2. Tambahkan Basemap (Pilih yang elegan, misal CartoDB Positron)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO'
+            }).addTo(map);
+
+            // 3. Tambahkan Marker Contoh (Nanti kita ganti dengan GeoJSON dari QGIS)
+            // Format: L.marker([lat, lng])
+            var marker = L.marker([-6.2415, 106.8745]).addTo(map); // Lokasi Kantor Waskita misalnya
+        
+            marker.bindPopup(`
+                <div style="text-align:center">
+                    <b style="color:#3453c1">Proyek Jalan Tol XYZ</b><br>
+                    <img src="assets/hero-waskita.jpg" width="100px" style="margin:5px 0"><br>
+                    <a href="projects/detail-proyek.html" style="color:#db4438; font-weight:bold;">Lihat Detail Proyek</a>
+                </div>
+            `);
+        </script>
+    </body>
+</html>

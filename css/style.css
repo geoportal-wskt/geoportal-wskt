@@ -1,0 +1,168 @@
+/* Warna Tema Waskita */
+:root {
+    --color-navy: #3453c1;
+    --color-maroon: #db4438;
+    --color-blue: #4a86d3;
+    --color-white: #ffffff;
+    --color-lightgray: #f4f4f4;
+    --color-darkgray: #333333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--color-darkgray);
+    background-color: var(--color-lightgray);
+    line-height: 1.6;
+}
+
+/* Header/Navbar */
+.navbar {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.navbar .nav-links a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: var(--color-maroon);
+}
+
+/* Hero Section (Banner Utama) */
+.hero-section {
+    /* Dari folder CSS, kita perlu keluar dulu (../) lalu masuk ke assets/ */
+    background: url('../assets/hero-waskita.jpg') no-repeat center center/cover; 
+    color: var(--color-white);
+    text-align: center;
+    padding: 8rem 2rem;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); /* Overlay gelap */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--color-maroon);
+    color: var(--color-white);
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-blue);
+}
+
+/* Content Section (Profile/About) */
+.container {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--color-navy);
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-maroon);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.grid-2-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.grid-2-cols img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    text-align: center;
+    padding: 2rem;
+    margin-top: 5rem;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Untuk map placeholder sementara */
+#map-placeholder {
+    height: 400px; /* Tinggi placeholder */
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
