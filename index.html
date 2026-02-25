@@ -102,22 +102,36 @@
                             });
                         },
                         onEachFeature: function (feature, layer) {
-                            // Membuat popup yang informatif
-                            layer.bindPopup(`
-                                <div style="text-align:center; font-family: sans-serif;">
-                                    <h4 style="margin:0; color:#3453c1;">${feature.properties.project}</h4>
-                                    <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
-                                    <hr style="border:0; border-top:1px solid #eee;">
-                                    <a href="projects/detail-proyek.html" style="
-                                        text-decoration:none; 
-                                        color:white; 
-                                        background:#db4438; 
-                                        padding:5px 10px; 
-                                        border-radius:3px; 
-                                        font-size:12px;
-                                        display:inline-block;
-                                    ">Buka Detail Proyek</a>
-                                </div>
+    // 1. Tentukan URL Tujuan
+    let projectUrl = "https://geoportal-wskt.github.io/Tol-Proban-3/"; // URL default
+    let projectName = feature.properties.project;
+
+    // 2. Logika Khusus untuk Tol Probolinggo Banyuwangi
+    // Pastikan teks di dalam if ini sama persis dengan yang ada di file GeoJSON Anda
+    if (projectName.includes("Tol Probolinggo Banyuwangi Paket 3(JOI member 25%)")) {
+        projectUrl = "https://geoportal-wskt.github.io/Tol-Proban-3/";
+    }
+
+    // 3. Render Popup dengan Link Dinamis
+    layer.bindPopup(`
+        <div style="text-align:center; font-family: sans-serif; min-width: 150px;">
+            <h4 style="margin:0; color:#3453c1;">${projectName}</h4>
+            <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
+            <hr style="border:0; border-top:1px solid #eee;">
+            <a href="${projectUrl}" target="_blank" style="
+                text-decoration:none; 
+                color:white; 
+                background:#db4438; 
+                padding:8px 15px; 
+                border-radius:4px; 
+                font-size:12px;
+                font-weight:bold;
+                display:inline-block;
+                margin-top:5px;
+            ">Buka Detail Proyek</a>
+        </div>
+    `);
+}
                             `);
                         }
                     }).addTo(map);
