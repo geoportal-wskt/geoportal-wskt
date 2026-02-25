@@ -4,127 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waskita Karya - Divisi Infra II | Geoportal Proyek</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        :root { --waskita-blue: #003060; --danger: #db4438; --waskita-light: #3b5998; }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; background-color: #f8f9fa; color: #333; }
-        
-        /* Navbar */
-        .navbar { background: var(--waskita-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .navbar .logo { font-weight: bold; font-size: 20px; text-decoration: none; color: white; }
-        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 500; }
-        
-        /* Hero Section */
-        .hero-section { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/600?grayscale'); 
-            background-size: cover; background-position: center;
-            color: white; padding: 120px 5%; text-align: center; 
-        }
-        .hero-section h1 { font-size: 3rem; margin-bottom: 15px; }
-        .hero-section p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px; }
-
-        /* Container & Grid */
-        .container { padding: 80px 8%; }
-        .section-title { text-align: center; color: var(--waskita-blue); margin-bottom: 40px; font-size: 2rem; position: relative; }
-        .section-title::after { content: ''; width: 60px; height: 4px; background: var(--danger); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
-        
-        .grid-2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .grid-2-cols img { width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-
-        /* Map Section */
-        #map { height: 550px; width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); background: #eee; }
-
-        /* Button */
-        .btn-primary { background: var(--danger); color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s; }
-        .btn-primary:hover { background: #b73329; transform: translateY(-2px); }
-
-        /* Footer */
-        .footer { background: var(--waskita-light); color: white; text-align: center; padding: 25px 0; font-size: 14px; margin-top: 50px; }
-
-        @media (max-width: 768px) { .grid-2-cols { grid-template-columns: 1fr; } .hero-section h1 { font-size: 2rem; } }
-    </style>
+   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+<div id="Tab Navigasi"></div>
     <nav class="navbar">
-        <a href="#" class="logo">Waskita Infra II</a>
+        <a href="#" class="logo">Waskita -Infra II</a>
         <div class="nav-links">
             <a href="#">Beranda</a>
             <a href="#about">Tentang Kami</a>
             <a href="#projects">Proyek Kami</a>
-            <a href="https://iyok0394-hash.github.io/webgis_infra2/" target="_blank" class="btn-primary">Lihat Peta Proyek</a>
+            <a href="#contact">Kontak</a>
+            <a href="https://iyok0394-hash.github.io/webgis_infra2/" target="_blank" class="btn-primary" style="margin-left: 30px;">Lihat Peta Proyek</a>
         </div>
     </nav>
 
+<div id="Tab Utama"></div>
     <section class="hero-section">
-        <h1>Departemen Infrastruktur II</h1>
-        <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
-        <a href="#projects" class="btn-primary">Telusuri Peta Proyek</a>
+        <div class="hero-content">
+            <h1>Departemen Infrastruktur II</h1>
+            <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
+            <a href="#" class="btn-primary">Telusuri Peta Proyek <i class="fas fa-arrow-right"></i></a>
+        </div>
     </section>
 
+<div id="Tab Tentang"></div>  
     <section id="about" class="container">
         <h2 class="section-title">Tentang Divisi Infrastruktur II</h2>
         <div class="grid-2-cols">
             <div>
                 <h3>Profil Singkat</h3>
                 <p>Infrastruktur II Department berfokus pada proyek-proyek infrastruktur jalan tol, jembatan dan fasilitas transportasi lainnya yang tersebar di seluruh Indonesia.</p>
-                <p>Kami berperan penting dalam mendukung program pembangunan nasional, sekaligus berkontribusi pada pertumbuhan ekonomi melalui pengembangan konektivitas di berbagai wilayah.</p>
+                <p>Infrastruktur 2 berperan penting dalam mendukung program pembangunan nasional, sekaligus berkontribusi pada pertumbuhan ekonomi dan kesejahteraan masyarakat melalui pengembangan konektivitas dan aksesibilitas di berbagai wilayah.</p>
                 <a href="https://www.waskita.co.id/" target="_blank" class="btn-primary">Baca Lebih Lanjut</a>
             </div>
             <div>
-                <img src="https://picsum.photos/600/400?random=2" alt="Waskita Project">
+                <img src="https://picsum.photos/600/400?random=2" alt="Waskita Infra II Project">
             </div>
         </div>
     </section>
 
-    <section id="projects" class="container" style="background-color: #fff;">
+<div id="Tab Peta Proyek"></div>    
+    <section id="projects" class="container">
         <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
-        <p style="text-align: center; margin-bottom: 30px;">Jelajahi lokasi proyek strategis kami secara interaktif.</p>
-        <div id="map"></div>
+        <p style="text-align: center; margin-bottom: 2rem;">Jelajahi lokasi proyek strategis kami.</p>
+        
+        <div id="map" style="height: 500px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>
     </section>
 
+<div id="FOOTER"></div>
     <footer class="footer">
         <p>&copy; 2026 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II - Tim Digital Survey & GIS. All Rights Reserved.</p>
     </footer>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        var map = L.map('map').setView([-2.5, 118], 5);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(map);
 
-        fetch('data/proyek_infra2.json')
-            .then(response => response.json())
-            .then(data => {
-                L.geoJSON(data, {
-                    pointToLayer: function (feature, latlng) {
-                        let warnaTitik = "#95a5a6";
-                        let status = (feature.properties.status || "").toLowerCase();
-                        if (status === "on going") warnaTitik = "#2ecc71";
-                        else if (status === "hold") warnaTitik = "#3498db";
-                        else if (status === "finished") warnaTitik = "#db4438";
+<div id="SCRIPT PETA"></div>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-                        return L.circleMarker(latlng, {
-                            radius: 10, fillColor: warnaTitik, color: "#fff", weight: 2, fillOpacity: 0.9
-                        });
-                    },
-                    onEachFeature: function (feature, layer) {
-                        let name = feature.properties.project || "Proyek Waskita";
-                        let url = "https://geoportal-wskt.github.io/Tol-Proban-3/";
-                        
-                        layer.bindPopup(`
-                            <div style="text-align:center; min-width:180px;">
-                                <h4 style="margin:0; color:#003060;">${name}</h4>
-                                <p style="margin:5px 0; font-size:12px;">Status: <b>${feature.properties.status}</b></p>
-                                <hr style="border:0; border-top:1px solid #eee;">
-                                <a href="${url}" target="_blank" style="background:#db4438; color:white; padding:8px 15px; border-radius:4px; text-decoration:none; display:inline-block; font-size:11px; font-weight:bold;">Buka Detail Proyek</a>
+        <script>
+            // 1. Inisialisasi Peta
+            var map = L.map('map').setView([-2.5, 118], 5);
+
+            // 2. Basemap
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO'
+            }).addTo(map);
+
+            // 3. Memanggil data GeoJSON Lokal
+            fetch('data/proyek_infra2v1.json')
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        pointToLayer: function (feature, latlng) {
+                            // Tentukan warna berdasarkan status
+                            let warnaTitik;
+                            let statusProyek = feature.properties.status.toLowerCase(); // Ambil data status
+
+                            if (statusProyek === "on going") {
+                                warnaTitik = "#2ecc71"; // Hijau
+                            } else if (statusProyek === "hold") {
+                                warnaTitik = "#3498db"; // Biru
+                            } else if (statusProyek === "finished") {
+                                warnaTitik = "#db4438"; // Merah Waskita
+                            } else {
+                                warnaTitik = "#95a5a6"; // Abu-abu jika status tidak dikenal
+                            }
+
+                            return L.circleMarker(latlng, {
+                                radius: 9,
+                                fillColor: warnaTitik,
+                                color: "#ffffff", // Garis tepi putih agar kontras
+                                weight: 2,
+                                opacity: 1,
+                                fillOpacity: 0.9
+                            });
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Membuat popup yang informatif
+                            layer.bindPopup(`
+                                <div style="text-align:center; font-family: sans-serif;">
+                                    <h4 style="margin:0; color:#3453c1;">${feature.properties.project}</h4>
+                                    <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
+                                    <hr style="border:0; border-top:1px solid #eee;">
+                                    <a href="projects/detail-proyek.html" style="
+                                        text-decoration:none; 
+                                        color:white; 
+                                        background:#db4438; 
+                                        padding:5px 10px; 
+                                        border-radius:3px; 
+                                        font-size:12px;
+                                        display:inline-block;
+                                    ">Buka Detail Proyek</a>
+                                </div>
+                            `);
+                        }
+                    }).addTo(map);
+                })
+                .catch(error => console.error('Error memuat data warna:', error));
+
+            // 4. Perbaikan tampilan tiles yang pecah
+            setTimeout(function(){ map.invalidateSize(); }, 500);
+
+/* Memasukkan Legenda ke Peta */
+            var legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                var statusLabels = ["On Going", "Hold", "Finished"];
+                var colors = ["#2ecc71", "#3498db", "#db4438"];
+
+                div.innerHTML = `
+                    <div style="
+                        background: rgba(255, 255, 255, 0.9);
+                        padding: 15px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        line-height: 24px;
+                        color: #333;
+                        min-width: 120px;
+                    ">
+                        <b style="display:block; margin-bottom: 10px; border-bottom: 2px solid #eee;">Status Proyek</b>
+                        ${statusLabels.map((label, i) => `
+                            <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                                <i style="background: ${colors[i]}; width: 14px; height: 14px; display: inline-block; margin-right: 10px; border-radius: 50%;"></i>
+                                <span style="font-size: 13px;">${label}</span>
                             </div>
-                        `);
-                    }
-                }).addTo(map);
-            });
-        setTimeout(function(){ map.invalidateSize(); }, 500);
-    </script>
-</body>
+                        `).join('')}
+                    </div>
+                `;
+                return div;
+            };
+
+            legend.addTo(map);
+        </script>
+    </body>
 </html>
