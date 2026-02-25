@@ -6,25 +6,42 @@
     <title>Waskita Karya - Divisi Infra II | Geoportal Proyek</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        :root { --waskita-blue: #003060; --danger: #db4438; }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; background-color: #f8f9fa; }
+        :root { --waskita-blue: #003060; --danger: #db4438; --waskita-light: #3b5998; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; background-color: #f8f9fa; color: #333; }
         
-        /* Navigasi */
-        .navbar { background: var(--waskita-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; }
+        /* Navbar */
+        .navbar { background: var(--waskita-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .navbar .logo { font-weight: bold; font-size: 20px; text-decoration: none; color: white; }
-        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 500; }
         
         /* Hero Section */
-        .hero-section { background: #666; color: white; padding: 100px 5%; text-align: center; }
-        .container { padding: 60px 5%; }
-        .section-title { text-align: center; color: var(--waskita-blue); margin-bottom: 30px; }
+        .hero-section { 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/600?grayscale'); 
+            background-size: cover; background-position: center;
+            color: white; padding: 120px 5%; text-align: center; 
+        }
+        .hero-section h1 { font-size: 3rem; margin-bottom: 15px; }
+        .hero-section p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px; }
+
+        /* Container & Grid */
+        .container { padding: 80px 8%; }
+        .section-title { text-align: center; color: var(--waskita-blue); margin-bottom: 40px; font-size: 2rem; position: relative; }
+        .section-title::after { content: ''; width: 60px; height: 4px; background: var(--danger); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
         
-        /* Ukuran Peta - Harus ada height agar muncul */
-        #map { height: 600px; width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); background: #eee; }
-        
-        /* Footer Biru */
-        .footer { background: #3b5998; color: white; text-align: center; padding: 20px 0; font-size: 13px; margin-top: 50px; }
-        .btn-primary { background: var(--danger); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .grid-2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .grid-2-cols img { width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* Map Section */
+        #map { height: 550px; width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); background: #eee; }
+
+        /* Button */
+        .btn-primary { background: var(--danger); color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .btn-primary:hover { background: #b73329; transform: translateY(-2px); }
+
+        /* Footer */
+        .footer { background: var(--waskita-light); color: white; text-align: center; padding: 25px 0; font-size: 14px; margin-top: 50px; }
+
+        @media (max-width: 768px) { .grid-2-cols { grid-template-columns: 1fr; } .hero-section h1 { font-size: 2rem; } }
     </style>
 </head>
 <body>
@@ -35,17 +52,34 @@
             <a href="#">Beranda</a>
             <a href="#about">Tentang Kami</a>
             <a href="#projects">Proyek Kami</a>
-            <a href="https://geoportal-wskt.github.io/Tol-Proban-3/" target="_blank" class="btn-primary">Detail Tol Proban 3</a>
+            <a href="https://iyok0394-hash.github.io/webgis_infra2/" target="_blank" class="btn-primary">Lihat Peta Proyek</a>
         </div>
     </nav>
 
     <section class="hero-section">
         <h1>Departemen Infrastruktur II</h1>
-        <p>Geoportal interaktif untuk memantau proyek-proyek strategis Waskita Karya secara real-time.</p>
+        <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
+        <a href="#projects" class="btn-primary">Telusuri Peta Proyek</a>
     </section>
 
-    <section id="projects" class="container">
+    <section id="about" class="container">
+        <h2 class="section-title">Tentang Divisi Infrastruktur II</h2>
+        <div class="grid-2-cols">
+            <div>
+                <h3>Profil Singkat</h3>
+                <p>Infrastruktur II Department berfokus pada proyek-proyek infrastruktur jalan tol, jembatan dan fasilitas transportasi lainnya yang tersebar di seluruh Indonesia.</p>
+                <p>Kami berperan penting dalam mendukung program pembangunan nasional, sekaligus berkontribusi pada pertumbuhan ekonomi melalui pengembangan konektivitas di berbagai wilayah.</p>
+                <a href="https://www.waskita.co.id/" target="_blank" class="btn-primary">Baca Lebih Lanjut</a>
+            </div>
+            <div>
+                <img src="https://picsum.photos/600/400?random=2" alt="Waskita Project">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container" style="background-color: #fff;">
         <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Jelajahi lokasi proyek strategis kami secara interaktif.</p>
         <div id="map"></div>
     </section>
 
@@ -54,66 +88,42 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <script>
-        // 1. Inisialisasi Peta Fokus Indonesia
         var map = L.map('map').setView([-2.5, 118], 5);
-
-        // 2. Basemap Terang dari CartoDB
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        // 3. Mengambil data GeoJSON dari folder data/
         fetch('data/proyek_infra2.json')
-            .then(response => {
-                if (!response.ok) throw new Error("File 'data/proyek_infra2.json' tidak ditemukan.");
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 L.geoJSON(data, {
                     pointToLayer: function (feature, latlng) {
-                        // Warna Titik Berdasarkan Status
-                        let warnaTitik = "#95a5a6"; 
+                        let warnaTitik = "#95a5a6";
                         let status = (feature.properties.status || "").toLowerCase();
-
-                        if (status === "on going") warnaTitik = "#2ecc71"; // Hijau
-                        else if (status === "hold") warnaTitik = "#3498db"; // Biru
-                        else if (status === "finished") warnaTitik = "#db4438"; // Merah
+                        if (status === "on going") warnaTitik = "#2ecc71";
+                        else if (status === "hold") warnaTitik = "#3498db";
+                        else if (status === "finished") warnaTitik = "#db4438";
 
                         return L.circleMarker(latlng, {
-                            radius: 10,
-                            fillColor: warnaTitik,
-                            color: "#fff",
-                            weight: 2,
-                            fillOpacity: 0.9
+                            radius: 10, fillColor: warnaTitik, color: "#fff", weight: 2, fillOpacity: 0.9
                         });
                     },
                     onEachFeature: function (feature, layer) {
-                        let namaProyek = feature.properties.project || "Tanpa Nama";
-                        let statusProyek = feature.properties.status || "-";
+                        let name = feature.properties.project || "Proyek Waskita";
+                        let url = "https://geoportal-wskt.github.io/Tol-Proban-3/";
                         
-                        // Menentukan Link: Jika proyek Probolinggo, arahkan ke repo khusus
-                        let urlTujuan = "https://geoportal-wskt.github.io/Tol-Proban-3/";
-
                         layer.bindPopup(`
                             <div style="text-align:center; min-width:180px;">
-                                <h4 style="margin:0; color: #003060;">${namaProyek}</h4>
-                                <p style="margin:5px 0; font-size:12px;">Status: <b>${statusProyek}</b></p>
+                                <h4 style="margin:0; color:#003060;">${name}</h4>
+                                <p style="margin:5px 0; font-size:12px;">Status: <b>${feature.properties.status}</b></p>
                                 <hr style="border:0; border-top:1px solid #eee;">
-                                <a href="${urlTujuan}" target="_blank" style="background:#db4438; color:white; padding:8px 12px; border-radius:4px; text-decoration:none; display:inline-block; font-size:11px; font-weight:bold; margin-top:5px;">
-                                    Buka Detail Proyek
-                                </a>
+                                <a href="${url}" target="_blank" style="background:#db4438; color:white; padding:8px 15px; border-radius:4px; text-decoration:none; display:inline-block; font-size:11px; font-weight:bold;">Buka Detail Proyek</a>
                             </div>
                         `);
                     }
                 }).addTo(map);
-            })
-            .catch(error => {
-                console.error('Gagal memuat data:', error);
             });
-
-        // Memperbaiki tampilan tiles yang sering terpotong saat awal muat
         setTimeout(function(){ map.invalidateSize(); }, 500);
     </script>
 </body>
