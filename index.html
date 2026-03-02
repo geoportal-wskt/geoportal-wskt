@@ -73,7 +73,11 @@
             }).addTo(map);
 
             // 3. Memanggil data GeoJSON Lokal
+<<<<<<< Updated upstream
             fetch('data/proyek_infra2v1.json')
+=======
+            fetch('data/proyek_infra2_v1.json')
+>>>>>>> Stashed changes
                 .then(response => response.json())
                 .then(data => {
                     L.geoJSON(data, {
