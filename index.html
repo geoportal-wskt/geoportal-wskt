@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waskita Karya - Divisi Infra II | Geoportal Proyek</title>
-   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -16,8 +17,7 @@
             <a href="#">Beranda</a>
             <a href="#about">Tentang Kami</a>
             <a href="#projects">Proyek Kami</a>
-            <a href="#contact">Kontak</a>
-            <a href="https://iyok0394-hash.github.io/webgis_infra2/" target="_blank" class="btn-primary" style="margin-left: 30px;">Lihat Peta Proyek</a>
+            <a href="https://www.waskita.co.id/" target="_blank" class="btn-primary" style="margin-left: 30px;">Website Waskita</a>
         </div>
     </nav>
 
@@ -26,7 +26,7 @@
         <div class="hero-content">
             <h1>Departemen Infrastruktur II</h1>
             <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
-            <a href="#" class="btn-primary">Telusuri Peta Proyek <i class="fas fa-arrow-right"></i></a>
+            <a href="#projects" class="btn-primary">Telusuri Peta Proyek</a>
         </div>
     </section>
 
@@ -46,119 +46,136 @@
         </div>
     </section>
 
-<div id="Tab Peta Proyek"></div>    
-    <section id="projects" class="container">
+<div id="Kontainer Statistik"></div> 
+    <div class="container" style="position: relative; z-index: 1000; margin-top: -50px;">
+        <div class="stats-bar" style="display: flex; justify-content: space-around; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+            <div class="stat-item">
+                <h2 id="total-proyek" style="margin:0; color: #1a2a6c;">0</h2>
+                <p style="margin:0; font-size: 12px; color: #666;">TOTAL PROYEK</p>
+            </div>
+            <div class="stat-item">
+                <h2 id="ongoing-count" style="margin:0; color: #2ecc71;">0</h2>
+                <p style="margin:0; font-size: 12px; color: #666;">ON GOING</p>
+            </div>
+            <div class="stat-item">
+                <h2 id="finished-count" style="margin:0; color: #db4438;">0</h2>
+                <p style="margin:0; font-size: 12px; color: #666;">FINISHED</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="projects" class="container" style="padding: 60px 0;">
         <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
-        <p style="text-align: center; margin-bottom: 2rem;">Jelajahi lokasi proyek strategis kami.</p>
-        
-        <div id="map" style="height: 500px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>
+        <p style="text-align: center; margin-bottom: 2rem;">Klik pada label di legenda untuk memfilter status proyek.</p>
+        <div id="map" style="height: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #1a2a6c;"></div>
     </section>
 
 <div id="FOOTER"></div>
-    <footer class="footer">
-        <p>&copy; 2026 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II - Tim Digital Survey & GIS. All Rights Reserved.</p>
+    <footer class="footer" style="padding: 20px; text-align: center; background: #1a2a6c; color: white;">
+        <p>&copy; 2026 Waskita Karya (Persero) Tbk. - Divisi Infrastruktur II - Tim Digital Survey & GIS.</p>
     </footer>
 
+<div id="Tab Peta Proyek"></div>  
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<div id="SCRIPT PETA"></div>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // 1. Inisialisasi Peta
+        var map = L.map('map').setView([-2.5, 118], 5);
+        var geojsonLayer;
+        var allData;
+        var hitung = { total: 0, ongoing: 0, hold: 0, finished: 0 };
 
-        <script>
-            // 1. Inisialisasi Peta
-            var map = L.map('map').setView([-2.5, 118], 5);
+        // 2. Basemap
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CARTO'
+        }).addTo(map);
 
-            // 2. Basemap
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap &copy; CARTO'
+        // 3. Fungsi Load & Filter Data
+        fetch('data/proyek_infra2v1.json')
+            .then(response => response.json())
+            .then(data => {
+                allData = data;
+                
+                // Hitung Statistik Otomatis
+                data.features.forEach(f => {
+                    let s = f.properties.status.toLowerCase().trim();
+                    hitung.total++;
+                    if (s === "on going") hitung.ongoing++;
+                    else if (s === "hold") hitung.hold++;
+                    else if (s === "finished") hitung.finished++;
+                });
+
+                // Update Angka di UI
+                document.getElementById('total-proyek').innerText = hitung.total;
+                document.getElementById('ongoing-count').innerText = hitung.ongoing;
+                document.getElementById('finished-count').innerText = hitung.finished;
+
+                // Tampilkan Peta Pertama Kali
+                renderMap(data);
+                addLegend();
+            })
+            .catch(error => console.error('Error:', error));
+
+        function renderMap(data) {
+            if (geojsonLayer) map.removeLayer(geojsonLayer);
+
+            geojsonLayer = L.geoJSON(data, {
+                pointToLayer: function (feature, latlng) {
+                    let s = feature.properties.status.toLowerCase().trim();
+                    let warna = s === "on going" ? "#2ecc71" : s === "hold" ? "#3498db" : "#db4438";
+
+                    return L.circleMarker(latlng, {
+                        radius: 9,
+                        fillColor: warna,
+                        color: "#fff",
+                        weight: 2,
+                        fillOpacity: 0.9
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(`
+                        <div style="text-align:center;">
+                            <h4 style="margin:0; color:#1a2a6c;">${feature.properties.project}</h4>
+                            <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
+                            <hr>
+                            <a href="projects/detail-proyek.html" style="background:#db4438; color:white; padding:5px 10px; text-decoration:none; border-radius:3px; font-size:12px; display:inline-block;">Buka Detail</a>
+                        </div>
+                    `);
+                }
             }).addTo(map);
+        }
 
-            // 3. Memanggil data GeoJSON Lokal
-            fetch('data/proyek_infra2v1.json')
-                .then(response => response.json())
-                .then(data => {
-                    L.geoJSON(data, {
-                        pointToLayer: function (feature, latlng) {
-                            // Tentukan warna berdasarkan status
-                            let warnaTitik;
-                            let statusProyek = feature.properties.status.toLowerCase(); // Ambil data status
-
-                            if (statusProyek === "on going") {
-                                warnaTitik = "#2ecc71"; // Hijau
-                            } else if (statusProyek === "hold") {
-                                warnaTitik = "#3498db"; // Biru
-                            } else if (statusProyek === "finished") {
-                                warnaTitik = "#db4438"; // Merah Waskita
-                            } else {
-                                warnaTitik = "#95a5a6"; // Abu-abu jika status tidak dikenal
-                            }
-
-                            return L.circleMarker(latlng, {
-                                radius: 9,
-                                fillColor: warnaTitik,
-                                color: "#ffffff", // Garis tepi putih agar kontras
-                                weight: 2,
-                                opacity: 1,
-                                fillOpacity: 0.9
-                            });
-                        },
-                        onEachFeature: function (feature, layer) {
-                            // Membuat popup yang informatif
-                            layer.bindPopup(`
-                                <div style="text-align:center; font-family: sans-serif;">
-                                    <h4 style="margin:0; color:#3453c1;">${feature.properties.project}</h4>
-                                    <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
-                                    <hr style="border:0; border-top:1px solid #eee;">
-                                    <a href="projects/detail-proyek.html" style="
-                                        text-decoration:none; 
-                                        color:white; 
-                                        background:#db4438; 
-                                        padding:5px 10px; 
-                                        border-radius:3px; 
-                                        font-size:12px;
-                                        display:inline-block;
-                                    ">Buka Detail Proyek</a>
-                                </div>
-                            `);
-                        }
-                    }).addTo(map);
-                })
-                .catch(error => console.error('Error memuat data warna:', error));
-
-            // 4. Perbaikan tampilan tiles yang pecah
-            setTimeout(function(){ map.invalidateSize(); }, 500);
-
-/* Memasukkan Legenda ke Peta */
+        function addLegend() {
             var legend = L.control({position: 'bottomright'});
-
             legend.onAdd = function (map) {
                 var div = L.DomUtil.create('div', 'info legend');
-                var statusLabels = ["On Going", "Hold", "Finished"];
-                var colors = ["#2ecc71", "#3498db", "#db4438"];
-
                 div.innerHTML = `
-                    <div style="
-                        background: rgba(255, 255, 255, 0.9);
-                        padding: 15px;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        line-height: 24px;
-                        color: #333;
-                        min-width: 120px;
-                    ">
-                        <b style="display:block; margin-bottom: 10px; border-bottom: 2px solid #eee;">Status Proyek</b>
-                        ${statusLabels.map((label, i) => `
-                            <div style="display: flex; align-items: center; margin-bottom: 5px;">
-                                <i style="background: ${colors[i]}; width: 14px; height: 14px; display: inline-block; margin-right: 10px; border-radius: 50%;"></i>
-                                <span style="font-size: 13px;">${label}</span>
-                            </div>
-                        `).join('')}
+                    <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); line-height: 25px; cursor: pointer;">
+                        <b style="color:#1a2a6c; border-bottom: 2px solid #eee; display:block; margin-bottom:10px;">Filter Status</b>
+                        <div onclick="filterPeta('all')"><b>• Tampilkan Semua (${hitung.total})</b></div>
+                        <div onclick="filterPeta('on going')"><i style="background:#2ecc71; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> On Going (${hitung.ongoing})</div>
+                        <div onclick="filterPeta('hold')"><i style="background:#3498db; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> Hold (${hitung.hold})</div>
+                        <div onclick="filterPeta('finished')"><i style="background:#db4438; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> Finished (${hitung.finished})</div>
                     </div>
                 `;
                 return div;
             };
-
             legend.addTo(map);
-        </script>
-    </body>
+        }
+
+        function filterPeta(status) {
+            if (status === 'all') {
+                renderMap(allData);
+            } else {
+                let filtered = {
+                    type: "FeatureCollection",
+                    features: allData.features.filter(f => f.properties.status.toLowerCase().trim() === status)
+                };
+                renderMap(filtered);
+            }
+        }
+
+        setTimeout(function(){ map.invalidateSize(); }, 500);
+    </script>
+</body>
 </html>
