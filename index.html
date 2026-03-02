@@ -40,8 +40,7 @@
                 <p>Infrastruktur 2 berperan penting dalam mendukung program pembangunan nasional, sekaligus berkontribusi pada pertumbuhan ekonomi dan kesejahteraan masyarakat melalui pengembangan konektivitas dan aksesibilitas di berbagai wilayah.</p>
                 <a href="https://www.waskita.co.id/" target="_blank" class="btn-primary">Baca Lebih Lanjut</a>
             </div>
-            <div>
-                <img src="https://picsum.photos/600/400?random=2" alt="Waskita Infra II Project">
+            <div class="slideshow-container" id="slideshow-foto">
             </div>
         </div>
     </section>
@@ -68,6 +67,11 @@
         <h2 class="section-title">OneMap Sebaran Proyek Kami</h2>
         <p style="text-align: center; margin-bottom: 2rem;">Klik pada label di legenda untuk memfilter status proyek.</p>
         <div id="map" style="height: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #1a2a6c;"></div>
+        <div class="search-container" style="margin-bottom: 15px; display: flex; gap: 10px;">
+    <input type="text" id="input-cari" placeholder="Cari nama proyek..." style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    <button onclick="cariProyek()" class="btn-primary" style="padding: 10px 20px;">Cari</button>
+</div>
+<div id="map" ...></div>
     </section>
 
 <div id="FOOTER"></div>
@@ -133,12 +137,27 @@
                     });
                 },
                 onEachFeature: function (feature, layer) {
+                    // Ambil data langsung dari properti GeoJSON
+                    let namaProyek = feature.properties.project;
+                    let statusProyek = feature.properties.status;
+                    let linkProyek = feature.properties.LinkGithub; // Ini akan mengambil isi kolom link
+
+                    // Buat tampilan Popup
                     layer.bindPopup(`
                         <div style="text-align:center;">
-                            <h4 style="margin:0; color:#1a2a6c;">${feature.properties.project}</h4>
-                            <p style="margin:5px 0;">Status: <b>${feature.properties.status}</b></p>
+                            <h4 style="margin:0; color:#1a2a6c;">${namaProyek}</h4>
+                            <p style="margin:5px 0;">Status: <b>${statusProyek}</b></p>
                             <hr>
-                            <a href="projects/detail-proyek.html" style="background:#db4438; color:white; padding:5px 10px; text-decoration:none; border-radius:3px; font-size:12px; display:inline-block;">Buka Detail</a>
+                            <a href="${linkProyek}" target="_blank" style="
+                                background:#db4438; 
+                                color:white; 
+                                padding:5px 15px; 
+                                text-decoration:none; 
+                                border-radius:3px; 
+                                font-size:12px; 
+                                display:inline-block;
+                                margin-top: 5px;
+                            ">Buka Detail Proyek</a>
                         </div>
                     `);
                 }
@@ -175,7 +194,51 @@
             }
         }
 
+        function cariProyek() {
+            let input = document.getElementById('input-cari').value.toLowerCase();
+            let found = false;
+
+            geojsonLayer.eachLayer(function(layer) {
+                let namaProyek = layer.feature.properties.project.toLowerCase();
+                if (namaProyek.includes(input)) {
+                    map.setView(layer.getLatLng(), 12); // Zoom ke lokasi
+                    layer.openPopup(); // Buka popup otomatis
+                    found = true;
+                }
+            });
+
+            if (!found) alert("Proyek tidak ditemukan.");
+        }
+
         setTimeout(function(){ map.invalidateSize(); }, 500);
+
+        // Daftar nama file foto kamu di folder data/gallery
+        const daftarFoto = ['1 (1).png', '1 (2).png', '1 (3).png', '1 (4).png', '1 (5).png', '1 (6).png', '1 (7).png', '1 (8).png', '1 (9).png', '1 (10).png', 
+    '1 (11).png', '1 (12).png', '1 (13).png', '1 (14).png', '1 (15).png', '1 (16).png', '1 (17).png']; 
+        const container = document.getElementById('slideshow-foto');
+
+        // Otomatis membuat elemen gambar
+        daftarFoto.forEach((foto, index) => {
+            let div = document.createElement('div');
+            div.className = "mySlides fade";
+            div.style.display = index === 0 ? "block" : "none"; // Munculkan foto pertama saja dulu
+            div.innerHTML = `<img src="assets/gallery/${foto}" style="width:100%; height:450px; object-fit:cover; border-radius:8px;">`;
+            container.appendChild(div);
+        });
+
+        // Fungsi animasi slide
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(showSlides, 4000); // Ganti tiap 4 detik
+        }
+        showSlides();
     </script>
 </body>
 </html>
