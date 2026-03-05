@@ -34,7 +34,7 @@
         <div class="hero-content">
             <h1>Departemen Infrastruktur II</h1>
             <p>Geoportal interaktif untuk memvisualisasikan dan memantau proyek-proyek strategis Divisi Infrastruktur II Waskita Karya.</p>
-            <a href="https://geoportal-wskt.github.io/onemap/" target="_blank" class="btn-primary">Telusuri Peta Proyek</a>
+            <a href="https://www.google.com/maps/d/edit?mid=1zajoAsbfrVZO-hYXlzWkkSWOFiB1lVU&usp=sharing" target="_blank" class="btn-primary">Telusuri Peta Proyek</a>
         </div>
     </section>
 
@@ -115,6 +115,33 @@
                 }
             });
         }
+        // --- Custom Control: Map My Visitors ---
+        var VisitorControl = L.Control.extend({
+            options: { position: 'bottomleft' }, // Posisi di samping kiri bawah peta
+            onAdd: function(map) {
+                var div = L.DomUtil.create('div', '');
+                div.id = 'visitor-widget-container';
+                div.innerHTML = `
+                    <button id="visitor-toggle-btn">📊 Statistik Pengunjung</button>
+                    <div id="visitor-content" style="display:none; width: 300px;">
+                        </div>
+                `;
+
+                // Logika Klik untuk Memperbesar/Memperkecil
+                L.DomEvent.on(div, 'click', function(e) {
+                    L.DomEvent.stopPropagation(e);
+                    var isExpanded = div.classList.toggle('expanded');
+                    var content = document.getElementById('visitor-content');
+                    content.style.display = isExpanded ? 'block' : 'none';
+                });
+
+                L.DomEvent.disableScrollPropagation(div);
+                L.DomEvent.disableClickPropagation(div);
+
+                return div;
+            }
+        });
+        map.addControl(new VisitorControl());
 
         // --- Load Data Proyek ---
         fetch('data/proyek_infra2v1.json')
@@ -207,5 +234,18 @@
         }
         showSlides();
     </script>
+
+    <script>
+        // Memindahkan script visitor ke dalam kontainer leaflet
+        window.onload = function() {
+            var widgetScript = document.createElement('script');
+            widgetScript.type = 'text/javascript';
+            widgetScript.id = 'mapmyvisitors';
+            widgetScript.src = '//mapmyvisitors.com/map.js?d=djT9yAYMhKBJqExLgTjuj8qHT7x9UtgSMAJ1s5W_7rs&cl=ffffff&w=a';
+            
+            // Memasukkan ke dalam elemen visitor-content yang kita buat di Leaflet
+            document.getElementById('visitor-content').appendChild(widgetScript);
+        };
+</script>
 </body>
 </html>
